@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #08080f;
+  --surface: #111118;
+  --surface-2: #1a1a24;
+  --border: #2a2a3a;
+  --focus: #f59e0b;
+  --focus-dim: #78350f;
+  --break: #34d399;
+  --break-dim: #064e3b;
+  --text: #e8e8f0;
+  --text-muted: #6b6b80;
+  --text-subtle: #3a3a50;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+}
+
+/* Remove default blue outline on mobile tap */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Page transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Timer ring pulse */
+@keyframes pulse-focus {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes pulse-break {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.timer-pulse-focus {
+  animation: pulse-focus 2s ease-in-out infinite;
+}
+
+.timer-pulse-break {
+  animation: pulse-break 3s ease-in-out infinite;
+}
+
+/* Phase background glow */
+@keyframes glow-focus {
+  0%, 100% { box-shadow: 0 0 60px rgba(245, 158, 11, 0.08); }
+  50% { box-shadow: 0 0 80px rgba(245, 158, 11, 0.15); }
+}
+
+@keyframes glow-break {
+  0%, 100% { box-shadow: 0 0 60px rgba(52, 211, 153, 0.08); }
+  50% { box-shadow: 0 0 80px rgba(52, 211, 153, 0.15); }
+}
+
+/* Smooth number transition */
+.timer-digit {
+  font-variant-numeric: tabular-nums;
+}
