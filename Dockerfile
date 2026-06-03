@@ -37,13 +37,14 @@ ENV NEXT_PUBLIC_APP_URL=""
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 HEALTHCHECK --interval=15s --timeout=30s --start-period=60s --retries=3 \
-  CMD node -e "require('http').get('http://127.0.0.1:3000/api/health',r=>{process.exit(r.statusCode===200?0:1)}).on('error',()=>process.exit(1))"
+  CMD curl -sf http://127.0.0.1:3000/api/health || exit 1
 
 USER nextjs
 EXPOSE 3000
