@@ -55,4 +55,4 @@ ENV PORT=3000
 # ENV (Config.Env) and inline in CMD (process env) so neither layer wins for the
 # wrong reason.
 ENV HOSTNAME=0.0.0.0
-CMD ["sh", "-c", "HOSTNAME=0.0.0.0 exec node server.js"]
+CMD ["sh", "-c", "HOSTNAME=0.0.0.0 exec node --unhandled-rejections=none server.js"]
