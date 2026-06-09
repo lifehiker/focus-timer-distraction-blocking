@@ -42,6 +42,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY server-wrapper.js ./
 
 HEALTHCHECK --interval=15s --timeout=30s --start-period=60s --retries=3 \
   CMD curl -sf http://127.0.0.1:3000/api/health || exit 1
@@ -55,4 +56,4 @@ ENV PORT=3000
 # ENV (Config.Env) and inline in CMD (process env) so neither layer wins for the
 # wrong reason.
 ENV HOSTNAME=0.0.0.0
-CMD ["sh", "-c", "HOSTNAME=0.0.0.0 exec node --unhandled-rejections=none server.js"]
+CMD ["sh", "-c", "HOSTNAME=0.0.0.0 exec node --unhandled-rejections=none server-wrapper.js"]
