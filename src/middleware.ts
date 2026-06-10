@@ -9,3 +9,11 @@ export function middleware(request: NextRequest) {
   }
   return NextResponse.next()
 }
+
+// Exclude API routes and Next.js internals so the health check (/api/health)
+// always reaches the route handler directly without going through the
+// Edge Runtime middleware (which can return 500 on first init and cause
+// the Docker HEALTHCHECK to fail).
+export const config = {
+  matcher: ['/((?!api/|_next/static|_next/image|favicon\\.ico).*)'],
+}
