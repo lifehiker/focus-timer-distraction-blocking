@@ -56,4 +56,4 @@ ENV PORT=3000
 # ENV (Config.Env) and inline in CMD (process env) so neither layer wins for the
 # wrong reason.
 ENV HOSTNAME=0.0.0.0
-CMD ["sh", "-c", "HOSTNAME=0.0.0.0 exec node --unhandled-rejections=none server-wrapper.js"]
+CMD ["sh", "-c", "while true; do HOSTNAME=0.0.0.0 node --unhandled-rejections=none server-wrapper.js; echo '[entrypoint] server exited, restarting in 1s...'; sleep 1; done"]
