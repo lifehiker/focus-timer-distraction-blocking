@@ -18,15 +18,4 @@ http.createServer = function (opts, handler) {
   return _origCreateServer(opts, wrappedHandler);
 };
 
-// Keep the process alive if Next.js throws an uncaught synchronous exception.
-process.on('uncaughtException', function (err) {
-  console.error('[server] Uncaught exception (continuing):', err && err.message ? err.message : err);
-});
-
-// Belt-and-suspenders: also suppress process.exit in case Next.js calls it
-// through a code path that bypasses the HTTP-layer intercept above.
-process.exit = function (code) {
-  console.error('[server] process.exit(' + (code || 0) + ') suppressed — server continuing');
-};
-
 require('./server.js');
